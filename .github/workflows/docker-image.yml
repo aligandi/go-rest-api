@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build -t docker-gorestapi -f ./Dockerfile .
+      run: docker build -t docker-gorestapi -f Dockerfile .
       
     - name: Login to DockerHub
       uses: docker/login-action@v1
