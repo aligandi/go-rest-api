@@ -11,12 +11,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      SHA5: ${GITHUB_SHA::5}
+      
     steps:
     - uses: actions/checkout@v2
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag go-rest-api:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag go-rest-api:${{ SHA5 }}
                         
     - name: Login to DockerHub
       uses: docker/login-action@v1
@@ -29,4 +31,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: algan/go-rest-api:${{ github.sha }}
+        tags: algan/go-rest-api:${{ SHA5 }}
