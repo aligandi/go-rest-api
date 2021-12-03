@@ -18,7 +18,7 @@ jobs:
         SHA8: $(git rev-parse --short {{ github.sha }})
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag go-rest-api:$SHA8
+      run: docker build . --file Dockerfile --tag go-rest-api:$ {{ SHA8 }}
                         
     - name: Login to DockerHub
       uses: docker/login-action@v1
@@ -31,4 +31,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: algan/go-rest-api:$SHA8
+        tags: algan/go-rest-api:$ {{ SHA8 }}
