@@ -14,9 +14,15 @@ jobs:
               
     steps:
     - uses: actions/checkout@v2
-               
+    
+    - name: Set SHA
+      id: vars
+      run: echo "::set-output name=sha_short::$(git rev-parse --short ${{ github.sha }})"
+    - name: Check outputs
+      run: echo ${{ steps.vars.outputs.sha_short }}  
+    
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag go-rest-api:'git rev-parse --short ${{ github.rsa }}'
+      run: docker build . --file Dockerfile --tag go-rest-api:${{ sha_short }}
                         
     - name: Login to DockerHub
       uses: docker/login-action@v1
@@ -29,4 +35,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: algan/go-rest-api:'git rev-parse --short ${{ github.rsa }}'
+        tags: algan/go-rest-api:${{ sha_short }}
